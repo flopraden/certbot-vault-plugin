@@ -59,7 +59,7 @@ class VaultInstaller(common.Plugin):
         )
         add("path",
             default=os.getenv('VAULT_PATH'),
-            help="Vault Mount Point"
+            help="Vault Path Point"
         )
 
     def __init__(self, *args, **kwargs):
@@ -132,7 +132,8 @@ class VaultInstaller(common.Plugin):
             'type': 'urn:scheme:type:certificate',
             'cert': cert,
             'key': open(key_path).read(),
-            'chain': open(fullchain_path).read(),
+            'chain': open(chain_path).read(),
+            'fullchain': open(fullchain_path).read(),
             'serial': str(openssl_cert.get_serial_number()),
             'life': {
                 'issued': int(datetime.strptime(openssl_cert.get_notBefore().decode(), date_format).timestamp()),
@@ -191,9 +192,9 @@ class VaultInstaller(common.Plugin):
         pass  # pragma: no cover
     
     def renew_deploy(self, lineage, *args, **kwargs):  # pylint: disable=missing-docstring,no-self-use,unused-argument
-    """
-    Renew certificates when calling `certbot renew`
-    """
-    self.deploy_cert(lineage.names()[0], lineage.cert_path, lineage.key_path, lineage.chain_path, lineage.fullchain_path)
+        """
+        Renew certificates when calling `certbot renew`
+        """
+        self.deploy_cert(lineage.names()[0], lineage.cert_path, lineage.key_path, lineage.chain_path, lineage.fullchain_path)
 
 interfaces.RenewDeployer.register(VaultInstaller)
