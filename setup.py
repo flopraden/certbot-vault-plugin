@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='certbot-vault',  # Required
-    version='0.3.8',  # Required
+    version='0.3.9',  # Required
     description='Certbot plugin to store certificates in Hashicorp Vault',
     url='https://github.com/deathowl/certbot-vault-plugin',  # Optional
 
@@ -38,9 +38,6 @@ setup(
         'certbot>=0.22.0',
         'PyOpenSSL',
         'setuptools',
-        'zope.component',
-        'zope.event',
-        'zope.interface',
         'hvac'
     ],
 

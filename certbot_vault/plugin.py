@@ -1,12 +1,9 @@
 """Vault Let's Encrypt installer plugin."""
 
-from __future__ import print_function
-
 import os
 import logging
 import hvac
 
-import zope.interface
 import OpenSSL.crypto
 
 from datetime import datetime
@@ -18,9 +15,7 @@ from certbot.plugins import common
 logger = logging.getLogger(__name__)
 
 
-@zope.interface.implementer(interfaces.IInstaller)
-@zope.interface.provider(interfaces.IPluginFactory)
-class VaultInstaller(common.Plugin):
+class VaultInstaller(common.Plugin, interfaces.Installer,interfaces.RenewDeployer):
     description = "Vault Cert Installer"
 
     @classmethod
@@ -196,5 +191,3 @@ class VaultInstaller(common.Plugin):
         Renew certificates when calling `certbot renew`
         """
         self.deploy_cert(lineage.names()[0], lineage.cert_path, lineage.key_path, lineage.chain_path, lineage.fullchain_path)
-
-interfaces.RenewDeployer.register(VaultInstaller)
